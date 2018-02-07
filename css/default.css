@@ -34,7 +34,7 @@ article {
 }
 #nav {
     background-color: #F5F5F5;
-	border-bottom: 2px solid #333333;
+    box-shadow:0 0 .5rem rgba(83,78,76,.5);
     float: left;
     margin-left: 1%;
     margin-right: 1%;
@@ -91,7 +91,7 @@ article {
     color: #FFFFFF;
 }
 #nav li.home > a {
-	background-color: #232323;
+    
 }
 #nav li.login{
 	border-bottom: 3px solid transparent;
