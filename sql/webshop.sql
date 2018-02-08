@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Jan 2018 um 16:25
--- Server-Version: 10.1.29-MariaDB
--- PHP-Version: 7.2.0
+-- Generation Time: Feb 08, 2018 at 09:24 PM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `webshop`
+-- Database: `webshop`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `customer`
+-- Table structure for table `customer`
 --
 
 CREATE TABLE `customer` (
@@ -39,16 +39,19 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Daten für Tabelle `customer`
+-- Dumping data for table `customer`
 --
 
 INSERT INTO `customer` (`id`, `username`, `company`, `Name`, `Surname`, `Mail`, `Pass`) VALUES
-(1, '', '', 'Luca', 'Colagiorgio', 'l.colagiorgio@hotmail.com', 'test123');
+(1, '', '', 'Luca', 'Colagiorgio', 'l.colagiorgio@hotmail.com', 'test123'),
+(2, 'test', 'test', 'test', 'test', 'test@test.ch', '$2y$10$BBCpJxgPa8K.iw9ZporxzuW2Lt478RPUV/JFvKRHKzJhIwGhd1tpa'),
+(3, 'test2', '', '', '', 'test@test2.ch', '$2y$10$VaOSjsNV9t.72v4kX.igUOc2LR9XUziCp922kCtBvyTthQaPArDtS'),
+(4, 'test3', '', '', '', 'test3@test.ch', '$2y$10$b9rV1jE4PoAls2yIUNIP/uB/o1nOBRkfigsqSFY0OTYvKzebeqJwK');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `offers`
+-- Table structure for table `offers`
 --
 
 CREATE TABLE `offers` (
@@ -65,7 +68,7 @@ CREATE TABLE `offers` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `requests`
+-- Table structure for table `requests`
 --
 
 CREATE TABLE `requests` (
@@ -80,17 +83,17 @@ CREATE TABLE `requests` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Indizes der exportierten Tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Indizes für die Tabelle `customer`
+-- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `offers`
+-- Indexes for table `offers`
 --
 ALTER TABLE `offers`
   ADD PRIMARY KEY (`id`),
@@ -98,47 +101,47 @@ ALTER TABLE `offers`
   ADD KEY `r_id` (`r_id`);
 
 --
--- Indizes für die Tabelle `requests`
+-- Indexes for table `requests`
 --
 ALTER TABLE `requests`
   ADD PRIMARY KEY (`id`),
   ADD KEY `c_id` (`c_id`);
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT für Tabelle `customer`
+-- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT für Tabelle `offers`
+-- AUTO_INCREMENT for table `offers`
 --
 ALTER TABLE `offers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT für Tabelle `requests`
+-- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints der exportierten Tabellen
+-- Constraints for dumped tables
 --
 
 --
--- Constraints der Tabelle `offers`
+-- Constraints for table `offers`
 --
 ALTER TABLE `offers`
   ADD CONSTRAINT `offers_ibfk_1` FOREIGN KEY (`c_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `offers_ibfk_2` FOREIGN KEY (`r_id`) REFERENCES `requests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `requests`
+-- Constraints for table `requests`
 --
 ALTER TABLE `requests`
   ADD CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`c_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
