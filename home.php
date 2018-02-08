@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+﻿<?php
+
+	require_once("session.php");
+	
+	require_once("func.php");
+	$auth_user = new USER();
+	
+	
+	$user_id = $_SESSION['user_session'];
+	
+	$stmt = $auth_user->runQuery("SELECT * FROM customer WHERE id=:id");
+	$stmt->execute(array(":id"=>$user_id));
+	
+	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+?>
+<!DOCTYPE html>
 <html>
 <head>
     
@@ -29,7 +45,6 @@
     <link rel="stylesheet" type="text/css" href="css/default.css" />    
     <!-- Stylesheet IE -->
     <link rel="stylesheet" type="text/css" href="IEsucks.css" />
-
 </head>
 
 <body> 
@@ -75,15 +90,44 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="#">Menu 3</a></li>
+            <li><a href="#s3">Menu 3</a>
+                <span id="s3"></span>
+                <ul class="subs">
+                    <li><a href="#">Header c</a>
+                        <ul>
+                            <li><a href="#">Submenu x</a></li>
+                            <li><a href="#">Submenu y</a></li>
+                            <li><a href="#">Submenu z</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Header d</a>
+                        <ul>
+                            <li><a href="#">Submenu x</a></li>
+                            <li><a href="#">Submenu y</a></li>
+                            <li><a href="#">Submenu z</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+                
             <li><a href="#">Menu 4</a></li>
             <li><a href="#">Menu 5</a></li>
-            <li class="login"><a href="#">Log In</a></li>
+            <li class="login"><a href="#6"><?php print($userRow['username']); ?></a>
+            <span id="s6"></span>
+                <ul class="subs">
+                    <li><a href="logout.php?logout=true">logoff</a>
+                        <ul>
+
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+                
         </ul>
         
     </nav>
     <article>
-        <p>test</p>
+        test
     </article>
 </body>
 
