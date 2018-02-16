@@ -12,7 +12,10 @@ if(isset($_POST['btn-signup']))
 {
 	$uname = strip_tags($_POST['uname']);
 	$umail = strip_tags($_POST['umail']);
-	$upass = strip_tags($_POST['upass']);	
+    $upass = strip_tags($_POST['upass']);
+    $ugivename = strip_tags($_POST['ugivename']);
+    $usurname = strip_tags($_POST['usurname']);
+    $ufirm = strip_tags($_POST['ufirm']);	
 	
 	if($uname=="")	{
 		$error[] = "Please provide a valid Username!";	
@@ -28,6 +31,15 @@ if(isset($_POST['btn-signup']))
 	}
 	else if(strlen($upass) < 8){
 		$error[] = "Password must be atleast 8 characters";	
+    }
+    else if($ugivename=="")	{
+		$error[] = "Please provide your given Name!";
+    }
+    else if($usurname=="")	{
+		$error[] = "Please provide you Surname!";
+    }
+    else if($ufirm=="")	{
+		$error[] = "Please provide your Company Name!";
 	}
 	else
 	{
@@ -45,7 +57,7 @@ if(isset($_POST['btn-signup']))
 			}
 			else
 			{
-				if($user->register($uname,$umail,$upass)){	
+				if($user->register($uname,$umail,$upass,$ugivename,$usurname,$ufirm)){	
 					$user->redirect('register.php?joined');
 				}
 			}
@@ -87,8 +99,6 @@ if(isset($_POST['btn-signup']))
     <title>WebShop</title>
     <!-- Stylesheet Firefox, Chrome, Safari, Opera -->
     <link rel="stylesheet" type="text/css" href="css/default.css" />    
-    <!-- Stylesheet IE -->
-    <link rel="stylesheet" type="text/css" href="IEsucks.css" />
 </head>
 <body>
 
@@ -97,7 +107,7 @@ if(isset($_POST['btn-signup']))
 	<nav>
         <ul id="nav">
             <li class="home"><a href="#"><img src="img/home.png"></a></li>
-            <li><a href="#s1">Menu 1</a>
+            <li><a href="#s1">Requests</a>
                 <span id="s1"></span>
                 <ul class="subs">
                     <li><a href="#">Header a</a>
@@ -116,48 +126,7 @@ if(isset($_POST['btn-signup']))
                     </li>
                 </ul>
             </li>
-            <li><a href="#s2">Menu 2</a>
-                <span id="s2"></span>
-                <ul class="subs">
-                    <li><a href="#">Header c</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Header d</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="#s3">Menu 3</a>
-                <span id="s3"></span>
-                <ul class="subs">
-                    <li><a href="#">Header c</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Header d</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-                
-            <li><a href="#">Menu 4</a></li>
-            <li><a href="#">Menu 5</a></li>
-            <li class="login"><a href="#s6">Log In</a>
+            <li class="login"><a href="index.php">Log In</a>
                 <span id="s6"></span>
                 <ul class="subs">
                     <form action="" method="post">
@@ -173,6 +142,7 @@ if(isset($_POST['btn-signup']))
                             </ul>
                         </li>
                         <li><a href="#">Forgot Password</a></li>
+                        <li><label>Don't have an account yet ? <a href="register.php">Register here.</a></label></li>
                         <li><input type="checkbox" checked="checked" name="remember"> Remember me</li>
                         <li><button type="submit" name="btn-login">LOGIN</button></li> 
                     </form> 
@@ -196,6 +166,14 @@ if(isset($_POST['btn-signup']))
             <div class="form-group">
             	<input type="password" class="form-control" name="upass" placeholder="Enter Password" />
             </div>
+            <div class="form-group">
+            	<input type="text" class="form-control" name="ugivename" placeholder="Enter given Name" />
+            </div>
+            <div class="form-group">
+            	<input type="text" class="form-control" name="usurname" placeholder="Enter Surname" />
+            </div>
+            <div class="form-group">
+            	<input type="text" class="form-control" name="ufirm" placeholder="Enter Company Name" />
             <hr />
             <div class="form-group">
             	<button type="submit" name="btn-signup">

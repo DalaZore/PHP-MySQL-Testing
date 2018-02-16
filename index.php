@@ -53,8 +53,6 @@ if(isset($_POST['btn-login']))
     <title>WebShop</title>
     <!-- Stylesheet Firefox, Chrome, Safari, Opera -->
     <link rel="stylesheet" type="text/css" href="css/default.css" />    
-    <!-- Stylesheet IE -->
-    <link rel="stylesheet" type="text/css" href="IEsucks.css" />
 </head>
 
 <body> 
@@ -62,7 +60,7 @@ if(isset($_POST['btn-login']))
     <nav>
         <ul id="nav">
             <li class="home"><a href="#"><img src="img/home.png"></a></li>
-            <li><a href="#s1">Menu 1</a>
+            <li><a href="#s1">Requests</a>
                 <span id="s1"></span>
                 <ul class="subs">
                     <li><a href="#">Header a</a>
@@ -81,48 +79,7 @@ if(isset($_POST['btn-login']))
                     </li>
                 </ul>
             </li>
-            <li><a href="#s2">Menu 2</a>
-                <span id="s2"></span>
-                <ul class="subs">
-                    <li><a href="#">Header c</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Header d</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="#s3">Menu 3</a>
-                <span id="s3"></span>
-                <ul class="subs">
-                    <li><a href="#">Header c</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Header d</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-                
-            <li><a href="#">Menu 4</a></li>
-            <li><a href="#">Menu 5</a></li>
-            <li class="login"><a href="#s6">Log In</a>
+            <li class="login"><a href="index.php">Log In</a>
                 <span id="s6"></span>
                 <ul class="subs">
                     <form action="" method="post">
@@ -134,11 +91,13 @@ if(isset($_POST['btn-login']))
                         </li>
                         <li><p>Password</p>
                             <ul>
-                                <input name="password" type="password" placeholder="Password">
+                                <input name="password" type="password" placeholder="Password">     
                             </ul>
                         </li>
                         <li><a href="#">Forgot Password</a></li>
+                        <li><label>Don't have an account yet ? <a href="register.php">Register here.</a></label></li>
                         <li><button type="submit" name="btn-login">LOGIN</button></li>
+                        
                         <li>
                             <?php
                                 if(isset($error))
@@ -162,7 +121,7 @@ if(isset($_POST['btn-login']))
 
 	<div class="container">  
         <form class="form-signin" method="post" id="login-form">
-            <h2 class="form-signin-heading">Log In to WebApp.</h2><hr />
+            <h2 class="form-signin-heading">Log In to the WebShop.</h2><hr />
             <div class="form-group">
                 <input type="text" class="form-control" name="username" placeholder="Username or Mail Address" required />
                 <span id="check-e"></span>
@@ -190,7 +149,7 @@ if(isset($_POST['btn-login']))
                 ?>
             </div> 
             <br />
-                <label>Don't have account yet ? <a href="register.php">Register here.</a></label>
+                <label>Don't have an account yet ? <a href="register.php">Register here.</a></label>
         </form>
 
     </div>
