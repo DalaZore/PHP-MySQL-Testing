@@ -13,6 +13,40 @@
 	
 	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
+    if(isset($_POST['btn-request']))
+{
+	$req_sub = strip_tags($_POST['req_sub']);
+	$req_desc = strip_tags($_POST['req_desc']);
+    $req_price = strip_tags($_POST['req_price']);
+    $req_quant = strip_tags($_POST['req_quant']);
+	
+	if($req_sub=="")	{
+		$error[] = "Please provide a valid Subject!";	
+	}
+	else if($req_desc=="")	{
+		$error[] = "Please provide a valid Description!";	
+	}
+	else if($req_price=="")	{
+		$error[] = "Please provide a Price!";
+	}
+    else if($req_quant=="")	{
+		$error[] = "Please provide a Quantity!";
+    }
+	else
+	{
+		try
+		{
+                       
+            if($auth_user->request($user_id,$req_sub,$req_desc,$req_price,$req_quant)){	
+                $auth_user->redirect('request.php?posted');
+            }
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+		}
+	}	
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -83,9 +117,51 @@
         </ul>
         
     </nav>
-    <article>
-        test
-    </article>
+    <div class="form-group">
+	<div class="container">
+    	
+        <form method="post" class="form-signin">
+            <h2 class="form-signin-heading">Request Form</h2><hr />
+           
+            <div class="form-group">
+            <input type="text" class="form-control" name="req_sub" placeholder="Enter a Subject" value="<?php if(isset($error)){echo $req_sub;}?>" />
+            </div>
+            <div class="form-group">
+            <input type="text" class="form-control" name="req_price" placeholder="Enter a Price" value="<?php if(isset($error)){echo $req_price;}?>" />
+            </div>
+            <div class="form-group">
+            	<input type="text" class="form-control" name="req_quant" placeholder="Enter the Quantity" value="<?php if(isset($error)){echo $req_quant;}?>" />
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" name="req_desc" id="comment" placeholder="Enter a description" value="<?php if(isset($error)){echo $req_desc;}?>"></textarea>
+            </div> 
+            <hr />
+            <div class="form-group">
+            	<button type="submit" name="btn-request">
+                	<i class="glyphicon glyphicon-open-file"></i>&nbsp;Post Request
+                </button>
+            </div>
+			<?php
+				if(isset($error)){
+					foreach($error as $error){
+						?>
+						<div class="alert alert-danger">
+							<i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
+						</div>
+						<?php
+					}
+				}
+				else if(isset($_GET['posted'])){
+					?>
+					<div class="alert alert-info">
+						<i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully submitted the Request!
+					</div>
+					<?php
+				}
+			?>
+            <br />
+        </form>
+	</div>
 </body>
 
 </html>

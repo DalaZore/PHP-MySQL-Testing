@@ -15,7 +15,6 @@ if(isset($_POST['btn-signup']))
     $upass = strip_tags($_POST['upass']);
     $ugivename = strip_tags($_POST['ugivename']);
     $usurname = strip_tags($_POST['usurname']);
-    $ufirm = strip_tags($_POST['ufirm']);	
 	
 	if($uname=="")	{
 		$error[] = "Please provide a valid Username!";	
@@ -38,9 +37,6 @@ if(isset($_POST['btn-signup']))
     else if($usurname=="")	{
 		$error[] = "Please provide you Surname!";
     }
-    else if($ufirm=="")	{
-		$error[] = "Please provide your Company Name!";
-	}
 	else
 	{
 		try
@@ -167,13 +163,11 @@ if(isset($_POST['btn-signup']))
             	<input type="password" class="form-control" name="upass" placeholder="Enter Password" />
             </div>
             <div class="form-group">
-            	<input type="text" class="form-control" name="ugivename" placeholder="Enter given Name" />
+            	<input type="text" class="form-control" name="ugivename" placeholder="Enter given Name" value="<?php if(isset($error)){echo $ugivename;}?>"/>
             </div>
             <div class="form-group">
-            	<input type="text" class="form-control" name="usurname" placeholder="Enter Surname" />
+            	<input type="text" class="form-control" name="usurname" placeholder="Enter Surname" value="<?php if(isset($error)){echo $usurname;}?>"/>
             </div>
-            <div class="form-group">
-            	<input type="text" class="form-control" name="ufirm" placeholder="Enter Company Name" />
             <hr />
             <div class="form-group">
             	<button type="submit" name="btn-signup">

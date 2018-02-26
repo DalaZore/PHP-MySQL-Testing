@@ -20,21 +20,20 @@ class USER
 		return $stmt;
 	}
 	
-	public function register($uname,$umail,$upass,$ugivename,$usurname,$ufirm)
+	public function register($uname,$umail,$upass,$ugivename,$usurname)
 	{
 		try
 		{
 			$new_password = password_hash($upass, PASSWORD_DEFAULT);
 			
-			$stmt = $this->conn->prepare("INSERT INTO customer(username,mail,pass,Name,Surname,company) 
-		                                               VALUES(:uname, :umail, :upass, :ugivename, :usurname, :ufirm)");
+			$stmt = $this->conn->prepare("INSERT INTO customer(username,mail,pass,Name,Surname) 
+		                                               VALUES(:uname, :umail, :upass, :ugivename, :usurname)");
 												  
 			$stmt->bindparam(":uname", $uname);
 			$stmt->bindparam(":umail", $umail);
 			$stmt->bindparam(":upass", $new_password);
 			$stmt->bindparam(":ugivename", $ugivename);
-			$stmt->bindparam(":usurname", $usurname);
-			$stmt->bindparam(":ufirm", $ufirm);										  
+			$stmt->bindparam(":usurname", $usurname);								  
 				
 			$stmt->execute();	
 			
@@ -46,6 +45,28 @@ class USER
 		}				
 	}
 	
+	public function request($user_id,$req_sub,$req_desc,$req_price,$req_quant)
+	{
+		try
+		{			
+			$stmt = $this->conn->prepare("INSERT INTO requests(c_id,subject,descr,price,quantity) 
+		                                               VALUES(:id, :req_sub, :req_desc, :req_price, :req_quant)");
+			
+			$stmt->bindparam(":id", $user_id);
+			$stmt->bindparam(":req_sub", $req_sub);
+			$stmt->bindparam(":req_desc", $req_desc);
+			$stmt->bindparam(":req_price", $req_price);
+			$stmt->bindparam(":req_quant", $req_quant);								  
+				
+			$stmt->execute();	
+			
+			return $stmt;	
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+		}				
+	}
 	
 	public function doLogin($uname,$umail,$upass)
 	{
