@@ -4,53 +4,36 @@
 	
 	require_once("func.php");
 	$auth_user = new USER();
-	
-	
+	$user_req = new USER();
 	$user_id = $_SESSION['user_session'];
 	
 	$stmt = $auth_user->runQuery("SELECT * FROM customer WHERE id=:id");
 	$stmt->execute(array(":id"=>$user_id));
 	
-	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-
-    if(isset($_POST['btn-request']))
-{
-    $req_item = strip_tags($_POST['req_item']);
-	$req_sub = strip_tags($_POST['req_sub']);
-	$req_desc = strip_tags($_POST['req_desc']);
-    $req_price = strip_tags($_POST['req_price']);
-    $req_quant = strip_tags($_POST['req_quant']);
+    $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     
-    if($req_item=="")	{
-		$error[] = "Please provide a valid Item!";	
-	}
-	else if($req_sub=="")	{
-		$error[] = "Please provide a valid Subject!";	
-	}
-	else if($req_desc=="")	{
-		$error[] = "Please provide a valid Description!";	
-	}
-	else if($req_price=="")	{
-		$error[] = "Please provide a Price!";
-	}
-    else if($req_quant=="")	{
-		$error[] = "Please provide a Quantity!";
-    }
-	else
-	{
-		try
-		{
-                       
-            if($auth_user->request($user_id,$req_item,$req_sub,$req_desc,$req_price,$req_quant)){	
-                $auth_user->redirect('request.php?posted');
+    if(isset($_POST['btn-search']))
+    {
+        $search = strip_tags($_POST['search']);
+
+        if($search=="")	{
+            $error[] = "Please provide a valid Item!";	
+        }
+        else
+        {
+            try
+            {
+                           
+                if($auth_user->search($search)){	
+                    $auth_user->redirect('search.php?search');
+                }
             }
-		}
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-		}
-	}	
-}
+            catch(PDOException $e)
+            {
+                echo $e->getMessage();
+            }
+        }	
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -115,34 +98,19 @@
         </ul>
         
     </nav>
-    <div class="form-group">
+
+    <div class="signin-form">
 	<div class="container">
-    	
+        <h2 class="form-signin-heading">Search</h2><hr />
         <form method="post" class="form-signin">
-            <h2 class="form-signin-heading">Request Form</h2><hr />
-           
             <div class="form-group">
-                <input type="text" class="form-control" name="req_item" placeholder="Enter an Item" value="<?php if(isset($error)){echo $req_item;}?>" />
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" name="req_sub" placeholder="Enter a Subject" value="<?php if(isset($error)){echo $req_sub;}?>" />
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" name="req_price" placeholder="Enter a Price" value="<?php if(isset($error)){echo $req_price;}?>" />
-            </div>
-            <div class="form-group">
-            	<input type="number" class="form-control" name="req_quant" placeholder="Enter the Quantity" value="<?php if(isset($error)){echo $req_quant;}?>" />
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" rows="5" name="req_desc" id="comment" placeholder="Enter a description" value="<?php if(isset($error)){echo $req_desc;}?>"></textarea>
-            </div> 
-            <hr />
-            <div class="form-group">
-            	<button type="submit" name="btn-request">
-                	<i class="glyphicon glyphicon-open-file"></i>&nbsp;Post Request
+                <input type="text" class="form-control" name="search" placeholder="Enter an Item"/> <br />
+                <button type="Search" name="btn-search">
+                    <i class="glyphicon glyphicon-open-file"></i>&nbsp;Search
                 </button>
+                <hr />
             </div>
-			<?php
+            <?php
 				if(isset($error)){
 					foreach($error as $error){
 						?>
@@ -152,17 +120,33 @@
 						<?php
 					}
 				}
-				else if(isset($_GET['posted'])){
-					?>
-					<div class="alert alert-info">
-						<i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully submitted the Request!
-					</div>
+				else if(isset($_GET['search'])){
+
+                    $stmt = $user_req->runQuery("SELECT * FROM requests WHERE item LIKE :search");
+                    $stmt->bindValue(":search","%".$search."%");
+                    $stmt->execute();
+        
+                    while($userReq=$stmt->fetch(PDO::FETCH_ASSOC)){
+                        
+                        ?><h6> Request ID </h6><?php echo($userReq['id']);  ?> <br /><br /> <?php
+                        ?><h6> Requested Item </h6><?php echo($userReq['Item']);  ?> <br /><br /> <?php
+                        ?><h6> Requested Price </h6><?php echo($userReq['price']);  ?> <br /><br /> <?php
+                        ?><h6> Requested Quantity </h6><?php echo($userReq['quantity']);  ?> <br /><br /> <?php
+                        ?><h6> Subject </h6><?php echo($userReq['subject']);  ?> <br /><br /> <?php
+                        ?><h6> Description </h6><?php echo($userReq['descr']);
+                        ?>
+                        <br />
+                        <hr />
+                        <?php
+                    }
+                ?>
 					<?php
 				}
 			?>
             <br />
         </form>
-	</div>
+    </div>
+    </div>
 </body>
 
 </html>

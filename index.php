@@ -58,27 +58,21 @@ if(isset($_POST['btn-login']))
 <body> 
     <!-- NAVIGATION BAR -->
     <nav>
-        <ul id="nav">
-            <li class="home"><a href="#"><img src="img/home.png"></a></li>
-            <li><a href="#s1">Requests</a>
-                <span id="s1"></span>
-                <ul class="subs">
-                    <li><a href="#">Header a</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Header b</a>
-                        <ul>
-                            <li><a href="#">Submenu x</a></li>
-                            <li><a href="#">Submenu y</a></li>
-                            <li><a href="#">Submenu z</a></li>
-                        </ul>
-                    </li>
+    <ul id="nav">
+    <li class="home"><a href="home.php"><img src="img/home.png"></a></li>
+    <li><a href="#s1">Menu</a>
+        <span id="s1"></span>
+        <ul class="subs">
+            <li><a href="request.php">Post a new Request</a>
+            </li>
+            <li><a href="search.php">Search for Requests</a>
+                <ul>
+                    <li><a href="all_requests.php">Show all requests</a></li>
+                    <li><a href="home.php">View your own Requests</a></li>
                 </ul>
             </li>
+        </ul>
+    </li>
             <li class="login"><a href="index.php">Log In</a>
                 <span id="s6"></span>
                 <ul class="subs">

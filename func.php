@@ -45,14 +45,34 @@ class USER
 		}				
 	}
 	
-	public function request($user_id,$req_sub,$req_desc,$req_price,$req_quant)
+	public function search($search)
+	{
+		try
+		{	
+			$stmt = $this->conn->prepare("SELECT * FROM requests WHERE item LIKE :search");
+			
+			$stmt->bindValue(":search","%".$search."%");
+							  
+				
+			$stmt->execute();	
+
+            return $stmt;
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+		}				
+	}
+	
+	public function request($user_id,$req_item,$req_sub,$req_desc,$req_price,$req_quant)
 	{
 		try
 		{			
-			$stmt = $this->conn->prepare("INSERT INTO requests(c_id,subject,descr,price,quantity) 
-		                                               VALUES(:id, :req_sub, :req_desc, :req_price, :req_quant)");
+			$stmt = $this->conn->prepare("INSERT INTO requests(c_id,item,subject,descr,price,quantity) 
+		                                               VALUES(:id, :req_item, :req_sub, :req_desc, :req_price, :req_quant)");
 			
 			$stmt->bindparam(":id", $user_id);
+			$stmt->bindparam(":req_item", $req_item);
 			$stmt->bindparam(":req_sub", $req_sub);
 			$stmt->bindparam(":req_desc", $req_desc);
 			$stmt->bindparam(":req_price", $req_price);
@@ -67,6 +87,7 @@ class USER
 			echo $e->getMessage();
 		}				
 	}
+
 	
 	public function doLogin($uname,$umail,$upass)
 	{

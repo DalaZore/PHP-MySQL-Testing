@@ -232,6 +232,9 @@ input.form-control {
     width: 500px;
 }
 
+/*OTHER STUFF*/
+
+
 /* RESPONSIVE */
 @media all and (max-width : 980px) {
     #nav > li , #nav > li.home , #nav > li.login {

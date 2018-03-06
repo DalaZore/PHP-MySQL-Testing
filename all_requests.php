@@ -5,14 +5,13 @@
 	require_once("func.php");
 	$auth_user = new USER();
 	$user_req = new USER();
-	
 	$user_id = $_SESSION['user_session'];
 	
 	$stmt = $auth_user->runQuery("SELECT * FROM customer WHERE id=:id");
 	$stmt->execute(array(":id"=>$user_id));
 	
-	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-
+    $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+    
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,13 +79,12 @@
 
     <div class="signin-form">
 	<div class="container">
-        <h2 class="form-signin-heading">Your posted Requests</h2><hr />
+        <h2 class="form-signin-heading">All Requests</h2><hr />
         <?php
-            $stmt = $user_req->runQuery("SELECT * FROM requests WHERE c_id=:id");
-            $stmt->execute(array(":id"=>$user_id));
-
-            while($userReq=$stmt->fetch(PDO::FETCH_ASSOC)){
-                
+            $stmt = $user_req->runQuery("SELECT * FROM requests");
+            $stmt->execute();
+        
+            while($userReq=$stmt->fetch(PDO::FETCH_ASSOC)){    
                 ?><h6> Request ID </h6><?php echo($userReq['id']);  ?> <br /><br /> <?php
                 ?><h6> Requested Item </h6><?php echo($userReq['Item']);  ?> <br /><br /> <?php
                 ?><h6> Requested Price </h6><?php echo($userReq['price']);  ?> <br /><br /> <?php
@@ -98,7 +96,9 @@
                 <hr />
                 <?php
             }
-        ?>
+                ?>
+            <br />
+        </form>
     </div>
     </div>
 </body>
