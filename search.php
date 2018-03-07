@@ -5,7 +5,7 @@
 	require_once("func.php");
 	$auth_user = new USER();
 	$user_req = new USER();
-	$user_id = $_SESSION['user_session'];
+    $user_id = $_SESSION['user_session'];
 	
 	$stmt = $auth_user->runQuery("SELECT * FROM customer WHERE id=:id");
 	$stmt->execute(array(":id"=>$user_id));
@@ -121,9 +121,9 @@
 					}
 				}
 				else if(isset($_GET['search'])){
-
+                    //$search_term = $_SESSION['search_term'];
                     $stmt = $user_req->runQuery("SELECT * FROM requests WHERE item LIKE :search");
-                    $stmt->bindValue(":search","%".$search."%");
+                    $stmt->bindValue(":search","%".$_SESSION['search_term']."%");
                     $stmt->execute();
         
                     while($userReq=$stmt->fetch(PDO::FETCH_ASSOC)){

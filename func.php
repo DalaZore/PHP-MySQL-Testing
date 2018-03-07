@@ -49,6 +49,7 @@ class USER
 	{
 		try
 		{	
+			$_SESSION['search_term'] = $search;
 			$stmt = $this->conn->prepare("SELECT * FROM requests WHERE item LIKE :search");
 			
 			$stmt->bindValue(":search","%".$search."%");
