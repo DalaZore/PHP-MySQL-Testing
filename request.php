@@ -13,8 +13,19 @@
 	
 	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
+    if(isset($_POST['btn-show']))
+    {
+            try
+            {
+                $auth_user->redirect('all_offers.php');
+            }
+            catch(PDOException $e)
+            {
+                echo $e->getMessage();
+            }	
+    }
     if(isset($_POST['btn-request']))
-{
+    {
     $req_item = strip_tags($_POST['req_item']);
 	$req_sub = strip_tags($_POST['req_sub']);
 	$req_desc = strip_tags($_POST['req_desc']);
@@ -163,6 +174,7 @@
             <br />
         </form>
 	</div>
+    </div>
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2018 at 06:01 PM
+-- Generation Time: Mar 07, 2018 at 10:18 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -63,6 +63,15 @@ CREATE TABLE `offers` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `offers`
+--
+
+INSERT INTO `offers` (`id`, `c_id`, `r_id`, `price`, `quantity`, `timestamp`) VALUES
+(1, 3, 4, '4.00', 4, '2018-03-07 20:53:19'),
+(2, 3, 4, '44.00', 44, '2018-03-07 21:04:12'),
+(3, 3, 1, '3.00', 2, '2018-03-07 21:16:33');
+
 -- --------------------------------------------------------
 
 --
@@ -86,9 +95,9 @@ CREATE TABLE `requests` (
 --
 
 INSERT INTO `requests` (`id`, `c_id`, `Item`, `subject`, `descr`, `timestamp`, `price`, `quantity`, `status`) VALUES
-(1, 2, '', 'asd', 'asd', '2018-02-26 18:31:20', '123.00', 321, 'Open'),
-(2, 3, '', 'test', 'descri', '2018-02-26 18:32:19', '32.00', 32333, 'Open'),
-(3, 5, '', 'Verkaufe Bolzen 12mm', 'Neu zustand bla', '2018-02-26 18:35:03', '123.00', 70, 'Open'),
+(1, 2, 'test', 'asd', 'asd', '2018-03-07 21:16:01', '123.00', 321, 'Open'),
+(2, 3, 'tisch', 'test', 'descri', '2018-03-07 21:16:10', '32.00', 32333, 'Open'),
+(3, 5, 'schrauben', 'Verkaufe Bolzen 12mm', 'Neu zustand bla', '2018-03-07 21:16:23', '123.00', 70, 'Open'),
 (4, 3, 'bolt 4', 'asd', '1', '2018-03-06 14:59:26', '1.00', 1, 'Open'),
 (5, 3, 'fff', 'asd', '3', '2018-03-06 14:59:44', '3.00', 3, 'Open');
 
@@ -131,7 +140,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `offers`
 --
 ALTER TABLE `offers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `requests`

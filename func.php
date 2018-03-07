@@ -68,7 +68,7 @@ class USER
 	public function request($user_id,$req_item,$req_sub,$req_desc,$req_price,$req_quant)
 	{
 		try
-		{			
+		{		
 			$stmt = $this->conn->prepare("INSERT INTO requests(c_id,item,subject,descr,price,quantity) 
 		                                               VALUES(:id, :req_item, :req_sub, :req_desc, :req_price, :req_quant)");
 			
@@ -89,6 +89,28 @@ class USER
 		}				
 	}
 
+	public function offer($user_id,$off_rid,$off_price,$off_quant)
+	{
+		try
+		{	
+
+			$stmt = $this->conn->prepare("INSERT INTO offers(c_id,r_id,price,quantity) 
+		                                               VALUES(:id, :off_rid, :off_price, :off_quant)");
+			
+			$stmt->bindparam(":id", $user_id);
+			$stmt->bindparam(":off_rid", $off_rid);
+			$stmt->bindparam(":off_price", $off_price);
+			$stmt->bindparam(":off_quant", $off_quant);							  
+				
+			$stmt->execute();	
+			
+			return $stmt;	
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+		}				
+	}
 	
 	public function doLogin($uname,$umail,$upass)
 	{

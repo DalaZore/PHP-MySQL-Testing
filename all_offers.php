@@ -5,14 +5,17 @@
 	require_once("func.php");
 	$auth_user = new USER();
 	$user_req = new USER();
-	
 	$user_id = $_SESSION['user_session'];
 	
 	$stmt = $auth_user->runQuery("SELECT * FROM customer WHERE id=:id");
 	$stmt->execute(array(":id"=>$user_id));
 	
-	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-
+    $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if(isset($_POST['offer_id']))
+    {
+        $_SESSION['off_rid'] = $_POST['offer_id'];
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,31 +83,24 @@
 
     <div class="signin-form">
 	<div class="container">
-        <h2 class="form-signin-heading">Your posted Requests</h2><hr />
+        <h2 class="form-signin-heading">All Offers for Request ID <?php echo $_SESSION['off_rid']; ?></h2><hr />
         <?php
-            $stmt = $user_req->runQuery("SELECT * FROM requests WHERE c_id=:id");
-            $stmt->execute(array(":id"=>$user_id));
-
-            while($userReq=$stmt->fetch(PDO::FETCH_ASSOC)){
-                
-                ?><h6> Request ID </h6><?php echo($userReq['id']);  ?> <br /><br /> <?php
-                ?><h6> Requested Item </h6><?php echo($userReq['Item']);  ?> <br /><br /> <?php
-                ?><h6> Requested Price </h6><?php echo($userReq['price']);  ?> <br /><br /> <?php
-                ?><h6> Requested Quantity </h6><?php echo($userReq['quantity']);  ?> <br /><br /> <?php
-                ?><h6> Subject </h6><?php echo($userReq['subject']);  ?> <br /><br /> <?php
-                ?><h6> Description </h6><?php echo($userReq['descr']);
-                ?>
+            
+            $stmt = $user_req->runQuery("SELECT * FROM offers where r_id=:id");
+            $stmt->bindValue(":id",$_SESSION['off_rid']);
+            $stmt->execute();
+        
+            while($userReq=$stmt->fetch(PDO::FETCH_ASSOC)){    
+                ?><h6> Offer ID </h6><?php echo($userReq['id']);  ?> <br /><br />
+                <h6> Offered Price </h6><?php echo($userReq['price']);  ?> <br /><br /> 
+                <h6> Offered Quantity </h6><?php echo($userReq['quantity']);  ?>
                 <br />
-                <form action="all_offers.php" method="post" class="form-signin">
-                <input type="hidden" class="form-control" name="offer_id" value="<?php echo htmlspecialchars($userReq['id']); ?>"/> <br />
-                <button type="Search" name="btn-show">
-                    <i class="glyphicon glyphicon-open-file"></i>&nbsp;Show Offers
-                </button>
-                </form>
                 <hr />
                 <?php
             }
-        ?>
+                ?>
+            <br />
+        </form>
     </div>
     </div>
 </body>

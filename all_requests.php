@@ -12,6 +12,28 @@
 	
     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     
+    if(isset($_POST['btn-offer']))
+    {
+            try
+            {
+                $auth_user->redirect('offer.php');
+            }
+            catch(PDOException $e)
+            {
+                echo $e->getMessage();
+            }	
+    }
+    if(isset($_POST['btn-show']))
+    {
+            try
+            {
+                $auth_user->redirect('all_offers.php');
+            }
+            catch(PDOException $e)
+            {
+                echo $e->getMessage();
+            }	
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -85,14 +107,26 @@
             $stmt->execute();
         
             while($userReq=$stmt->fetch(PDO::FETCH_ASSOC)){    
-                ?><h6> Request ID </h6><?php echo($userReq['id']);  ?> <br /><br /> <?php
-                ?><h6> Requested Item </h6><?php echo($userReq['Item']);  ?> <br /><br /> <?php
-                ?><h6> Requested Price </h6><?php echo($userReq['price']);  ?> <br /><br /> <?php
-                ?><h6> Requested Quantity </h6><?php echo($userReq['quantity']);  ?> <br /><br /> <?php
-                ?><h6> Subject </h6><?php echo($userReq['subject']);  ?> <br /><br /> <?php
-                ?><h6> Description </h6><?php echo($userReq['descr']);
-                ?>
+                ?><h6> Request ID </h6><?php echo($userReq['id']);  ?> <br /><br />
+                <h6> Requested Item </h6><?php echo($userReq['Item']);  ?> <br /><br /> 
+                <h6> Requested Price </h6><?php echo($userReq['price']);  ?> <br /><br />
+                <h6> Requested Quantity </h6><?php echo($userReq['quantity']);  ?> <br /><br />
+                <h6> Subject </h6><?php echo($userReq['subject']);  ?> <br /><br /> 
+                <h6> Description </h6><?php echo($userReq['descr']);  ?>
                 <br />
+                <form action="offer.php" method="post" class="form-signin">
+                <input type="hidden" class="form-control" name="offer_id" value="<?php echo htmlspecialchars($userReq['id']); ?>"/> <br />
+                <input type="hidden" class="form-control" name="offer_item" value="<?php echo htmlspecialchars($userReq['Item']); ?>"/> <br />
+                <button type="Search" name="btn-offer">
+                    <i class="glyphicon glyphicon-open-file"></i>&nbsp;Create Offer
+                </button>
+                </form>
+                <form action="all_offers.php" method="post" class="form-signin">
+                <input type="hidden" class="form-control" name="offer_id" value="<?php echo htmlspecialchars($userReq['id']); ?>"/> <br />
+                <button type="Search" name="btn-show">
+                    <i class="glyphicon glyphicon-open-file"></i>&nbsp;Show Offers
+                </button>
+                </form>
                 <hr />
                 <?php
             }

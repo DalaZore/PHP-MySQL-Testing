@@ -12,6 +12,18 @@
 	
     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     
+    if(isset($_POST['btn-show']))
+    {
+            try
+            {
+                $auth_user->redirect('all_offers.php');
+            }
+            catch(PDOException $e)
+            {
+                echo $e->getMessage();
+            }	
+    }
+    
     if(isset($_POST['btn-search']))
     {
         $search = strip_tags($_POST['search']);
@@ -136,6 +148,12 @@
                         ?><h6> Description </h6><?php echo($userReq['descr']);
                         ?>
                         <br />
+                        <form action="all_offers.php" method="post" class="form-signin">
+                            <input type="hidden" class="form-control" name="offer_id" value="<?php echo htmlspecialchars($userReq['id']); ?>"/> <br />
+                            <button type="Search" name="btn-show">
+                                <i class="glyphicon glyphicon-open-file"></i>&nbsp;Show Offers
+                            </button>
+                        </form>
                         <hr />
                         <?php
                     }

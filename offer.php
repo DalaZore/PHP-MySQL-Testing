@@ -5,14 +5,46 @@
 	require_once("func.php");
 	$auth_user = new USER();
 	$user_req = new USER();
-	
 	$user_id = $_SESSION['user_session'];
-	
+    
 	$stmt = $auth_user->runQuery("SELECT * FROM customer WHERE id=:id");
 	$stmt->execute(array(":id"=>$user_id));
 	
-	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+    $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
+    if(isset($_POST['offer_id']))
+    {
+        $_SESSION['off_rid'] = $_POST['offer_id'];
+        $_SESSION['offer_item'] = $_POST['offer_item'];
+    }
+
+    if(isset($_POST['btn-createoffer']))
+    {
+        $off_rid = strip_tags($_SESSION['off_rid']);
+        $off_price = strip_tags($_POST['off_price']);
+        $off_quant = strip_tags($_POST['off_quant']);
+        
+        if($off_price=="")	{
+            $error[] = "Please provide a valid Price!";	
+        }
+        else if($off_quant=="")	{
+            $error[] = "Please provide a valid Quantity!";	
+        }
+        else
+        {
+            try
+            {
+                        
+                if($auth_user->offer($user_id,$off_rid,$off_price,$off_quant)){	
+                    $auth_user->redirect('offer.php?posted');
+                }
+            }
+            catch(PDOException $e)
+            {
+                echo $e->getMessage();
+            }
+        }
+    }	
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,33 +112,47 @@
 
     <div class="signin-form">
 	<div class="container">
-        <h2 class="form-signin-heading">Your posted Requests</h2><hr />
-        <?php
-            $stmt = $user_req->runQuery("SELECT * FROM requests WHERE c_id=:id");
-            $stmt->execute(array(":id"=>$user_id));
+        <h2 class="form-signin-heading">Create Offer for Request ID <?php echo $_SESSION['off_rid']; ?></h2><hr />
+        <form method="post" class="form-signin">  
+            <input type="hidden" class="form-control" name="off_rid" value="<?php echo htmlspecialchars($_SESSION['off_rid']); ?>"/> <br />         
+            <div class="form-group">
+                <label>Requested Item</label>
+                <input type="text" class="form-control" name="off_item" placeholder="<?php echo htmlspecialchars($_SESSION['offer_item']); ?>" value="<?php if(isset($error)){echo htmlspecialchars($_SESSION['offer_item']);}?>" readonly/>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" name="off_price" placeholder="Enter a Price" value="<?php if(isset($error)){echo $off_price;}?>" />
+            </div>
+            <div class="form-group">
+            	<input type="number" class="form-control" name="off_quant" placeholder="Enter the Quantity" value="<?php if(isset($error)){echo $off_quant;}?>" />
+            </div>
 
-            while($userReq=$stmt->fetch(PDO::FETCH_ASSOC)){
-                
-                ?><h6> Request ID </h6><?php echo($userReq['id']);  ?> <br /><br /> <?php
-                ?><h6> Requested Item </h6><?php echo($userReq['Item']);  ?> <br /><br /> <?php
-                ?><h6> Requested Price </h6><?php echo($userReq['price']);  ?> <br /><br /> <?php
-                ?><h6> Requested Quantity </h6><?php echo($userReq['quantity']);  ?> <br /><br /> <?php
-                ?><h6> Subject </h6><?php echo($userReq['subject']);  ?> <br /><br /> <?php
-                ?><h6> Description </h6><?php echo($userReq['descr']);
-                ?>
-                <br />
-                <form action="all_offers.php" method="post" class="form-signin">
-                <input type="hidden" class="form-control" name="offer_id" value="<?php echo htmlspecialchars($userReq['id']); ?>"/> <br />
-                <button type="Search" name="btn-show">
-                    <i class="glyphicon glyphicon-open-file"></i>&nbsp;Show Offers
+            <hr />
+            <div class="form-group">
+            	<button type="submit" name="btn-createoffer">
+                	<i class="glyphicon glyphicon-open-file"></i>&nbsp;Post Request
                 </button>
-                </form>
-                <hr />
-                <?php
-            }
-        ?>
+            </div>
+			<?php
+				if(isset($error)){
+					foreach($error as $error){
+						?>
+						<div class="alert alert-danger">
+							<i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
+						</div>
+						<?php
+					}
+				}
+				else if(isset($_GET['posted'])){
+					?>
+					<div class="alert alert-info">
+						<i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully submitted the Offer!
+					</div>
+					<?php
+				}
+			?>
+            <br />
+        </form>
     </div>
     </div>
 </body>
-
 </html>
