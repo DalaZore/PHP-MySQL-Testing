@@ -70,7 +70,7 @@
     <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
     <link rel="apple-touch-icon-precomposed" href="img/mobile_favicon.png">
     <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 196x196 pixels in size. -->
-    <link rel="icon" href="img/favicon.png">	    
+    <link rel="icon" href="img/favicon.ico">	    
     <!-- Titel Declaration -->
     <title>WebShop</title>
     <!-- Stylesheet Firefox, Chrome, Safari, Opera -->
@@ -112,7 +112,7 @@
 
     <div class="signin-form">
 	<div class="container">
-        <h2 class="form-signin-heading">Create Offer for Request ID <?php echo $_SESSION['off_rid']; ?></h2><hr />
+        <h2 class="form-signin-heading">Create Offer for Request ID <?php echo htmlspecialchars($_SESSION['off_rid']); ?></h2><hr />
         <form method="post" class="form-signin">  
             <input type="hidden" class="form-control" name="off_rid" value="<?php echo htmlspecialchars($_SESSION['off_rid']); ?>"/> <br />         
             <div class="form-group">
@@ -129,7 +129,7 @@
             <hr />
             <div class="form-group">
             	<button type="submit" name="btn-createoffer">
-                	<i class="glyphicon glyphicon-open-file"></i>&nbsp;Post Request
+                	<i class="glyphicon glyphicon-open-file"></i>&nbsp;Post Offer
                 </button>
             </div>
 			<?php

@@ -90,7 +90,7 @@ if(isset($_POST['btn-signup']))
     <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
     <link rel="apple-touch-icon-precomposed" href="img/mobile_favicon.png">
     <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 196x196 pixels in size. -->
-    <link rel="icon" href="img/favicon.png">	    
+    <link rel="icon" href="img/favicon.ico">	    
     <!-- Titel Declaration -->
     <title>WebShop</title>
     <!-- Stylesheet Firefox, Chrome, Safari, Opera -->
