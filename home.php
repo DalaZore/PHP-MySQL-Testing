@@ -95,7 +95,7 @@
                 ?><h6> Description </h6><?php echo($userReq['descr']);
                 ?>
                 <br />
-                <form action="all_offers.php" method="post" class="form-signin">
+                <form action="own_offers.php" method="post" class="form-signin">
                 <input type="hidden" class="form-control" name="offer_id" value="<?php echo htmlspecialchars($userReq['id']); ?>"/> <br />
                 <button type="Search" name="btn-show">
                     <i class="glyphicon glyphicon-open-file"></i>&nbsp;Show Offers

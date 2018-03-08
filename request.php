@@ -31,6 +31,7 @@
 	$req_desc = strip_tags($_POST['req_desc']);
     $req_price = strip_tags($_POST['req_price']);
     $req_quant = strip_tags($_POST['req_quant']);
+    $req_date = strip_tags($_POST['req_date']);
     
     if($req_item=="")	{
 		$error[] = "Please provide a valid Item!";	
@@ -47,12 +48,15 @@
     else if($req_quant=="")	{
 		$error[] = "Please provide a Quantity!";
     }
+    else if($req_date=="")	{
+		$error[] = "Please provide a valid Date!";
+    }
 	else
 	{
 		try
 		{
                        
-            if($auth_user->request($user_id,$req_item,$req_sub,$req_desc,$req_price,$req_quant)){	
+            if($auth_user->request($user_id,$req_item,$req_sub,$req_desc,$req_date,$req_price,$req_quant)){	
                 $auth_user->redirect('request.php?posted');
             }
 		}
@@ -143,6 +147,9 @@
             </div>
             <div class="form-group">
             	<input type="number" class="form-control" name="req_quant" placeholder="Enter the Quantity" value="<?php if(isset($error)){echo $req_quant;}?>" />
+            </div>
+            <div class="form-group">
+            	<input type="date" class="form-control" name="req_date" placeholder="" value="<?php if(isset($error)){echo $req_date;}?>" />
             </div>
             <div class="form-group">
                 <textarea class="form-control" rows="5" name="req_desc" id="comment" placeholder="Enter a description" value="<?php if(isset($error)){echo $req_desc;}?>"></textarea>
