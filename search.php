@@ -151,7 +151,6 @@
                     $stmt->execute();
         
                     while($userReq=$stmt->fetch(PDO::FETCH_ASSOC)){
-                        
                         ?><h6> Request ID </h6><?php echo($userReq['id']);  ?> <br /><br /> <?php
                         ?><h6> Requested Item </h6><?php echo($userReq['Item']);  ?> <br /><br /> <?php
                         ?><h6> Requested Price </h6><?php echo($userReq['price']);  ?> <br /><br /> <?php
