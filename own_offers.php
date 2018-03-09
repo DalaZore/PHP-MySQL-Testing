@@ -155,7 +155,7 @@
                                 }
                             ?>
                             <div class="alert alert-info">
-                                    <i class="glyphicon glyphicon-log-in"></i> &nbsp;Accepted This Offer
+                                    <i class="glyphicon glyphicon-log-in"></i> &nbsp;Accepted This Offer <a href="offerxml/Offer_ID_'<?php echo($userReq['id']);  ?>'.xml">(XML Download)</a>
                             </div>
                             <hr />
                                 
