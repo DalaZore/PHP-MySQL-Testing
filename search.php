@@ -12,6 +12,18 @@
 	
     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     
+    if(isset($_POST['btn-offer']))
+    {
+            try
+            {
+                $auth_user->redirect('offer.php');
+            }
+            catch(PDOException $e)
+            {
+                echo $e->getMessage();
+            }	
+    }
+    
     if(isset($_POST['btn-show']))
     {
             try
@@ -148,6 +160,13 @@
                         ?><h6> Description </h6><?php echo($userReq['descr']);
                         ?>
                         <br />
+                        <form action="offer.php" method="post" class="form-signin">
+                        <input type="hidden" class="form-control" name="offer_id" value="<?php echo htmlspecialchars($userReq['id']); ?>"/> <br />
+                        <input type="hidden" class="form-control" name="offer_item" value="<?php echo htmlspecialchars($userReq['Item']); ?>"/> <br />
+                        <button type="Search" name="btn-offer">
+                            <i class="glyphicon glyphicon-open-file"></i>&nbsp;Create Offer
+                        </button>
+                        </form>
                         <form action="all_offers.php" method="post" class="form-signin">
                             <input type="hidden" class="form-control" name="offer_id" value="<?php echo htmlspecialchars($userReq['id']); ?>"/> <br />
                             <button type="Search" name="btn-show">
