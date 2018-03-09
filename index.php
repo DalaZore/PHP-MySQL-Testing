@@ -149,6 +149,12 @@ if(isset($_POST['btn-login']))
     </div>
     
 </div>
+<footer>
+        <p>© 2018 Copyright</p>
+</footer>
+
 </body>
+
+
 
 </html>

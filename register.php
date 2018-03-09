@@ -189,6 +189,9 @@ if(isset($_POST['btn-signup']))
             <br />
         </form>
 	</div>
-	</div>
+    </div>
+    <footer>
+        <p>© 2018 Copyright</p>
+</footer>
 </body>
 </html>

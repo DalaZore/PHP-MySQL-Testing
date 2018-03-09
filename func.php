@@ -97,7 +97,7 @@ class USER
 			$stmt = $this->conn->prepare("UPDATE offers SET accepted='Yes' WHERE id=$offer_id");
 			$stmt->execute();
 
-			$myfile = fopen("offerxml\Offer_ID_'$offer_id'.txt", "w");
+			$myfile = fopen("offerxml\Offer_ID_'$offer_id'.xml", "w");
 			$txt = "Offer_ID: '$offer_id' \r\nPrice: '$price' \r\nQuantity: '$quantity'";
 			fwrite($myfile, $txt);
 			fclose($myfile);			

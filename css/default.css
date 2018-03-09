@@ -234,6 +234,15 @@ input.form-control {
 
 /*OTHER STUFF*/
 
+/* FOOTER */
+footer{
+    position:fixed;
+    bottom: -10px;
+    left: 0px;
+    background-color: #F5F5F5;
+    width: 100%;
+    text-align: center;
+}
 
 /* RESPONSIVE */
 @media all and (max-width : 980px) {
